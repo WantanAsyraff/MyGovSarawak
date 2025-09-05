@@ -12,7 +12,7 @@
 -->
 <%@ page import = "jakarta.servlet.*,jakarta.servlet.http.* "%>
 
-<!--  -->
+<!-- Self note: This is a scriptlet. this is how you can embed Java code into -->
 <%
 	// Get the client's Locale
 	Locale locale = request.getLocale();
