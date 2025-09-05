@@ -8,11 +8,23 @@
 <!-- Taip sendiri - wantan -->
 <!--
 	This is a directive indicated with a < %@...% > syntax. Its purpose is to tell the JSP engine how to compile the
-	page. It runs only once during page translation time.
+	page. It runs only once during page translation time. - wantan
 -->
 <%@ page import = "java.util.*;" %>
 
+<!--
+	This is a scriplet, indicated with a < %...% > syntax. This is how you embed
+	Java code into your JSP. Executes when a request is processed.
+-->
 
+<% 
+	Locale locale = new Locale("ms", "MY"); // Malaysian locale; Default (Igonore the warning, depreciated my bum!)
+	ResourceBundle bundle = ResourceBundle.getBundle("ms-MY", locale); 
+	// This approach is personally better due to a few reasons. One of them
+	// is being able to reference the .getStrings directly in html code;
+	// Example: <h1>< %= bundle.getString('property-value') % ></h1>
+	// So wowzars <(owo)> !! <- live reaction - wantan
+%>
 
 <!DOCTYPE html>
 <html>
