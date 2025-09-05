@@ -6,23 +6,23 @@
 -->
 
 <!-- Taip sendiri - wantan -->
+
 <!--
 	This is a directive indicated with a < %@...% > syntax. Its purpose is to tell the JSP engine how to compile the
 	page. It runs only once during page translation time. - wantan
 -->
-<%@ page import = "java.util.*;" %>
+<%@ page import = "java.util.*" %>
 
 <!--
 	This is a scriplet, indicated with a < %...% > syntax. This is how you embed
-	Java code into your JSP. Executes when a request is processed.
+	Java code into your JSP. Executes when a request is processed. - wantan
 -->
-
 <% 
-	Locale locale = new Locale("ms", "MY"); // Malaysian locale; Default (Igonore the warning, depreciated my bum!)
-	ResourceBundle bundle = ResourceBundle.getBundle("ms-MY", locale); 
+	Locale locale = new Locale("ms", "MY"); // Malaysian locale; Default (Ignore the warning, depreciated my bum!)
+	ResourceBundle bundle = ResourceBundle.getBundle("messages", locale); 
 	// This approach is personally better due to a few reasons. One of them
 	// is being able to reference the .getStrings directly in html code;
-	// Example: <h1>< %= bundle.getString('property-value') % ></h1>
+	// Example: <h1>< %= bundle.getString("property-value") % ></h1>
 	// So wowzars <(owo)> !! <- live reaction - wantan
 %>
 
@@ -37,16 +37,16 @@
 	<!-- LOGIN FORM HTML -->
 	<section>
 		<div class="form-bg-card">
-			<img src="#">
+			<img src="#" alt=<%= bundle.getString("alt.img") %>>
 		</div>
 	</section>
 	<!-- Login card -->
 	<section>
 		<div class="login-form-card">
-			<h1></h1>
+			<h1><%= bundle.getString("welcome.message") %></h1>
 			<form>			
-			<label>Name: </label><input name="name" type="text" required>
-			<label>Password: </label><input name="password" type="password" required>
+			<label><%= bundle.getString("username") %>: </label><input name="username" type="text" required>
+			<label><%= bundle.getString("password") %> </label><input name="password" type="password" required>
 			<button type="submit">submit</button>
 			<button type="reset">reset</button>
 			</form>
