@@ -44,7 +44,8 @@
 		<div class="login-form-card">
 		<h1><%= bundle.getString("welcome.message") %></h1>
 			<div class="inner-form">
-				<form action="POST">			
+			<!-- Method POST Here -->
+				<form action="AdminServlet" method="POST">			
 					<label><%= bundle.getString("username") %>: </label><input name="username" type="text" required>
 					<br>
 					<label><%= bundle.getString("password") %>: </label><input name="password" type="password" required>
