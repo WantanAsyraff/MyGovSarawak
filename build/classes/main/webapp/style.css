@@ -37,12 +37,19 @@ body {
 	align-items: center;
 	background-color: #c1121f; /*Red*/
 	padding: 4rem;
+	padding-left: 6rem;
+	padding-right: 0px;
 	width: 30rem;
 	height: 100vh;
 }
 
 .login-form-card h1 {
 	font-weight: 900;
+	text-align: center;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	color: #ffb703; /*Yellow*/
+	font-size: 26px;
 }
 
 .login-form-card {
@@ -61,10 +68,12 @@ body {
 	justify-content:flex-end;
 }
 .inner-form {
-	background-color: #000000;
-	padding: 2rem;
-	height: 120vh;
 	color: #ffb703; /*Yellow*/
+	background-color: #000000;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	padding-top: 44vh;
+	padding-bottom: 42vh;
 }
 
 .login-form-card .inner-form button {
