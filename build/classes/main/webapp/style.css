@@ -1,5 +1,78 @@
 @charset "UTF-8";
 
-h1 {
-	font-size: 90px;
+* {
+	padding: 0px;
+	margin: 0px;
+	text-decoration: none;
+	list-style:none;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	display: flex;
+}
+
+.card-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	background-color: #ffb703; /*Yellow*/
+	align-items: center;
+	flex: 1;
+	margin: 0px;
+	padding: 0px;
+}
+
+.card-wrapper img {
+    flex: 1 1 auto;      /* grow and shrink as needed */
+    width: 100%;         /* make sure it fills horizontally */
+    height: 100%;        /* make sure it fills vertically */
+    object-fit: cover;   /* maintain aspect ratio while filling */
+}
+
+.login-form-card {
+	text-transform: uppercase;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	background-color: #c1121f; /*Red*/
+	padding: 4rem;
+	width: 30rem;
+	height: 100vh;
+}
+
+.login-form-card h1 {
+	font-weight: 900;
+}
+
+.login-form-card {
+	font-weight: 800;
+}
+
+.login-form-card input {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	width: 15vw;
+	height: 4vh;
+	font-weight: 800;
+}
+
+.login-form-card .inner-form {
+	justify-content:flex-end;
+}
+.inner-form {
+	background-color: #000000;
+	padding: 2rem;
+	height: 120vh;
+	color: #ffb703; /*Yellow*/
+}
+
+.login-form-card .inner-form button {
+	margin: 0.6rem;
+	width: 6vw;
+	height: 5vh;
+	text-transform: uppercase;
+	font-weight: 900;
+	color: #000000;
+	background-color: #ffffff;
 }
