@@ -21,13 +21,9 @@
 	Java code into your JSP. Executes when a request is processed. - wantan
 -->
 <% 
-	// Messages.properties Naming Convention — BaseName_language_COUNTRY.properties
-	// BaseName: Common identifier
-	// Language: Two-letter lowercase code
-	// COUNTRY: Two-letter uppercase code
-	Locale locale = new Locale("ms", "MY"); // Malaysian locale; Default (Ignore the warning, depreciated my bum!)
-	ResourceBundle bundle = ResourceBundle.getBundle("messages", locale); 
+	ResourceBundle bundle = (ResourceBundle) request.getAttribute("bundle");
 	// This approach is personally better due to a few reasons. One of them
+	// Make sure you have forwarded the bundle in LoginServlet.java
 	// is being able to reference the .getStrings directly in html code;
 	// Example: <h1>< %= bundle.getString("property-value") % ></h1>
 	// Oh and btw <%=... % > is for value calls. FYI

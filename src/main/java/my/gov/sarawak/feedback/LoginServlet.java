@@ -1,11 +1,19 @@
 package my.gov.sarawak.feedback;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
+
 import java.io.IOException;
+import java.lang.classfile.instruction.NewMultiArrayInstruction;
+import java.util.*;
+
+import com.sun.org.apache.xpath.internal.operations.And;
 
 /**
  * Servlet implementation class LoginServlet
@@ -13,7 +21,8 @@ import java.io.IOException;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -69,9 +78,54 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    
+    private void login_validation(String usernameString, String passString, HttpSession sess) {
+		// We pass parameters from the .jsp + a new Http session into here to validate
+    	// the login 
+    	String adminString = "admin";
+    	String adminPassString = "123";
+    	
+    	if (usernameString.equals(adminString) && passString.equals(adminPassString)) {
+    		// setAttribute can be anything we want to store during this session.
+    		// Be sure that you only keep things you would want to keep temporarily.
+    		sess.setAttribute("username", "admin");
+    		sess.setAttribute("role", "admin");
+    		sess.setAttribute("sessionSuccess", true);
+    		sess.setAttribute("time", new Date());
+    		
+    		// We can retrieve an attribute back using this code
+    		// String username = (String) session.getAttribute("username");
+    	}
+    	else {
+    		// Failed login, we kill session.
+    		sess.setAttribute("sessionSuccess", false);
+    		sess.setAttribute("errorMsg", "Invalid Login!");
+    		sess.invalidate();
+    	}
+	}
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		// Step 1: Decide locale (Default is MY)
+		// Messages.properties Naming Convention — BaseName_language_COUNTRY.properties
+		// BaseName: Common identifier
+		// COUNTRY: Two-letter uppercase code
+		// Language: Two-letter lowercase code
+		
+		Locale locale = new Locale("ms", "MY"); // Malaysian locale; Default (Ignore the warning, depreciated my bum!)
+		
+		// Step 2: Load bundle
+		ResourceBundle bundle = ResourceBundle.getBundle("Messages", locale); 
+		
+		// Step 3: Attach to request
+		request.setAttribute("bundle", bundle);
+		
+		// Step 4: Forward to JSP
+		RequestDispatcher dispatcher = request.getRequestDispatcher("LoginForm.jsp");
+		dispatcher.forward(request, response);
+		
+		// Check login
 	}
 
 	/**
@@ -79,6 +133,17 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		// Get an existing session (null if none; indicated with the false param)
+		HttpSession session = request.getSession(false);
+		
+		String username = request.getParameter("username");
+        String password = request.getParameter("password");
+		
+        // Request the values we want from our .jsp and create a new session. 
+        // Then send them to our validation function
+		login_validation(username, password, session);
+
 		doGet(request, response);
 	}
 
