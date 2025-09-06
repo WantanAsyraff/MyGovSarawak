@@ -112,6 +112,7 @@ public class LoginServlet extends HttpServlet {
     	}
     	else {
     		// If failed login, we fail session.
+    		sess.invalidate();
     		sess.setAttribute("sessionSuccess", false);
     		sess.setAttribute("errorMsg", "Invalid Login! Please try again.");
     	}
@@ -134,8 +135,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// Get an existing session (null if none; indicated with the false param)
-		HttpSession session = request.getSession(false);
+		// If no session exists, one gets created automatically.
+		HttpSession session = request.getSession(true);
 		
 		String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -152,7 +153,8 @@ public class LoginServlet extends HttpServlet {
 		// Typecasting works since we know that sessionSuccess could hold a true/false value
 		// (As defined in the login_validation() function). So, we can add a (Type) to tell
 		// The compiler how exactly it should read the attribute.
-		Boolean  sessSuccess = (Boolean) request.getAttribute("sessionSuccess");
+		// NOTE: it's session.getAttrib, not request.getAttrib; It will not work if you do so
+		Boolean  sessSuccess = (Boolean) session.getAttribute("sessionSuccess");
 		
 		// Make sure session success is not null and is true.
 		if (sessSuccess != null && sessSuccess) {
@@ -161,8 +163,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			
 			// If incorrect, we send the user back to login form. with an error message.
-			RequestDispatcher dispatcher = request.getRequestDispatcher("LoginForm.jsp");
-			dispatcher.forward(request, response);
+			response.sendRedirect("LoginForm.jsp?error=1");
 		}
 		
 		// doGet(request, response);

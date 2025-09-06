@@ -6,6 +6,7 @@
 	REFERENCES
 	Sir Azlan's notes on mycidos (Week 1 - Week5)
 	link: https://www.tutorialspoint.com/jsp/jsp_internationalization.htm
+	https://stackoverflow.com/questions/30980616/difference-between-request-getsession-and-request-getsessiontrue?
 	
 	UPDATE (9/7/2025) - Apparently I just read this source:
 	https://stackoverflow.com/questions/6555395/jsp-resourcebundle?
@@ -45,16 +46,7 @@
 </head>
 <body>
 	<!-- LOGIN FORM HTML -->
-	<%
-		Boolean loginFailed = (Boolean) session.getAttribute("sessionSuccess");
-		
-		// Check if login is false
-		if (loginFailed != null && !loginFailed) {
-	%>
-			<p style="color: red"><%= session.getAttribute("errorMsg") %></p>
-	<%	
-		}
-	%>
+
 	<section class="card-wrapper">
 		<img src="imgs/sarawak.jpg" alt=<%= bundle.getString("alt.img") %>>
 	</section>
@@ -64,8 +56,17 @@
 		<h1><%= bundle.getString("welcome.message") %></h1>
 			<div class="inner-form">
 			<!-- Method POST Here -->
+					<%
+						Boolean loginFailed = (Boolean) session.getAttribute("sessionSuccess");
+						// Check if login is false
+						if (loginFailed != null && !loginFailed) {
+					%>
+							<label><%= session.getAttribute("errorMsg") %></label>
+					<%	
+						}
+					%>	
 				<form action="LoginServlet" method="POST">
-				<!-- Perform client side validation: using required keyword -->		
+				<!-- Perform client side validation: using required keyword -->	
 					<label><%= bundle.getString("username") %>: </label><input name="username" type="text" required>
 					<br>
 					<label><%= bundle.getString("password") %>: </label><input name="password" type="password" required>
