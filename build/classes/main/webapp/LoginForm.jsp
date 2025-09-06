@@ -6,6 +6,12 @@
 	REFERENCES
 	Sir Azlan's notes on mycidos (Week 1 - Week5)
 	link: https://www.tutorialspoint.com/jsp/jsp_internationalization.htm
+	
+	UPDATE (9/7/2025) - Apparently I just read this source:
+	https://stackoverflow.com/questions/6555395/jsp-resourcebundle?
+	And it mentioned using scriptlets is bad practise... However I am too far deep and
+	it's 5:57 A.M.... I'll take this as a learning lesson - wantan
+	
 -->
 
 <!-- Taip sendiri - wantan -->
@@ -39,6 +45,16 @@
 </head>
 <body>
 	<!-- LOGIN FORM HTML -->
+	<%
+		Boolean loginFailed = (Boolean) session.getAttribute("sessionSuccess");
+		
+		// Check if login is false
+		if (loginFailed != null && !loginFailed) {
+	%>
+			<p style="color: red"><%= session.getAttribute("errorMsg") %></p>
+	<%	
+		}
+	%>
 	<section class="card-wrapper">
 		<img src="imgs/sarawak.jpg" alt=<%= bundle.getString("alt.img") %>>
 	</section>

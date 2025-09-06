@@ -7,13 +7,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
-
 import java.io.IOException;
-import java.lang.classfile.instruction.NewMultiArrayInstruction;
 import java.util.*;
 
-import com.sun.org.apache.xpath.internal.operations.And;
 
 /**
  * Servlet implementation class LoginServlet
@@ -79,6 +75,24 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     
+    @SuppressWarnings("deprecation") // For the sake of this assignment, since apparently
+    // Locale is depreciated now.
+    private void set_locale_bundle(HttpServletRequest request) {
+    	// Step 1: Decide locale (Default is MY)
+    	// Messages.properties Naming Convention — BaseName_language_COUNTRY.properties
+    	// BaseName: Common identifier
+    	// COUNTRY: Two-letter uppercase code
+    	// Language: Two-letter lowercase code
+    	
+    	Locale locale = new Locale("ms", "MY"); // Malaysian locale; Default (Ignore the warning, depreciated my bum!)
+    			
+    	// Step 2: Load bundle
+    	ResourceBundle bundle = ResourceBundle.getBundle("Messages", locale); 
+    			
+    	// Step 3: Attach to request
+    	request.setAttribute("bundle", bundle);
+    }
+    
     private void login_validation(String usernameString, String passString, HttpSession sess) {
 		// We pass parameters from the .jsp + a new Http session into here to validate
     	// the login 
@@ -97,35 +111,21 @@ public class LoginServlet extends HttpServlet {
     		// String username = (String) session.getAttribute("username");
     	}
     	else {
-    		// Failed login, we kill session.
+    		// If failed login, we fail session.
     		sess.setAttribute("sessionSuccess", false);
-    		sess.setAttribute("errorMsg", "Invalid Login!");
-    		sess.invalidate();
+    		sess.setAttribute("errorMsg", "Invalid Login! Please try again.");
     	}
 	}
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// Step 1: Decide locale (Default is MY)
-		// Messages.properties Naming Convention — BaseName_language_COUNTRY.properties
-		// BaseName: Common identifier
-		// COUNTRY: Two-letter uppercase code
-		// Language: Two-letter lowercase code
+		//Always set your locale bundle
+		set_locale_bundle(request);
 		
-		Locale locale = new Locale("ms", "MY"); // Malaysian locale; Default (Ignore the warning, depreciated my bum!)
-		
-		// Step 2: Load bundle
-		ResourceBundle bundle = ResourceBundle.getBundle("Messages", locale); 
-		
-		// Step 3: Attach to request
-		request.setAttribute("bundle", bundle);
-		
-		// Step 4: Forward to JSP
+		// Forward to JSP
 		RequestDispatcher dispatcher = request.getRequestDispatcher("LoginForm.jsp");
 		dispatcher.forward(request, response);
-		
-		// Check login
 	}
 
 	/**
@@ -139,12 +139,33 @@ public class LoginServlet extends HttpServlet {
 		
 		String username = request.getParameter("username");
         String password = request.getParameter("password");
+        
+        //Always set your locale bundle
+      	set_locale_bundle(request);
 		
         // Request the values we want from our .jsp and create a new session. 
         // Then send them to our validation function
 		login_validation(username, password, session);
-
-		doGet(request, response);
+		
+		// Typecasting to ensure tell the compilar that we want "sessionSuccess" to be
+		// read as a boolean; Defined by adding the (Boolean) syntax.
+		// Typecasting works since we know that sessionSuccess could hold a true/false value
+		// (As defined in the login_validation() function). So, we can add a (Type) to tell
+		// The compiler how exactly it should read the attribute.
+		Boolean  sessSuccess = (Boolean) request.getAttribute("sessionSuccess");
+		
+		// Make sure session success is not null and is true.
+		if (sessSuccess != null && sessSuccess) {
+			// If correct, we can forward the user into the feedback form
+			response.sendRedirect("FeedbackForm.jsp");
+		} else {
+			
+			// If incorrect, we send the user back to login form. with an error message.
+			RequestDispatcher dispatcher = request.getRequestDispatcher("LoginForm.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+		// doGet(request, response);
 	}
 
 }
