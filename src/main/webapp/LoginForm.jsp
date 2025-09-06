@@ -2,6 +2,9 @@
 <!--
 	For this assignment, I'm using tutorialspoint.com as my main reference alonside other online sources
 	to properly create internationalization. - wantan
+	
+	REFERENCES
+	Sir Azlan's notes on mycidos (Week 1 - Week5)
 	link: https://www.tutorialspoint.com/jsp/jsp_internationalization.htm
 -->
 
@@ -18,6 +21,10 @@
 	Java code into your JSP. Executes when a request is processed. - wantan
 -->
 <% 
+	// Messages.properties Naming Convention — BaseName_language_COUNTRY.properties
+	// BaseName: Common identifier
+	// Language: Two-letter lowercase code
+	// COUNTRY: Two-letter uppercase code
 	Locale locale = new Locale("ms", "MY"); // Malaysian locale; Default (Ignore the warning, depreciated my bum!)
 	ResourceBundle bundle = ResourceBundle.getBundle("messages", locale); 
 	// This approach is personally better due to a few reasons. One of them
@@ -45,7 +52,8 @@
 		<h1><%= bundle.getString("welcome.message") %></h1>
 			<div class="inner-form">
 			<!-- Method POST Here -->
-				<form action="AdminServlet" method="POST">			
+				<form action="LoginServlet" method="POST">
+				<!-- Perform client side validation: using required keyword -->		
 					<label><%= bundle.getString("username") %>: </label><input name="username" type="text" required>
 					<br>
 					<label><%= bundle.getString("password") %>: </label><input name="password" type="password" required>
