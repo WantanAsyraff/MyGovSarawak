@@ -141,9 +141,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		//Headers & Contents
-		response.setHeader("Accept-Language", "ms-MY");
-		response.setContentType("text/html; charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
+		
 		
 		// If no session exists, one gets created automatically.
 		HttpSession session = request.getSession(true);

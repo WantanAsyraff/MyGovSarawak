@@ -75,7 +75,7 @@ public class FeedbackServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	private Boolean validate_form(String fullnameForm, String emailForm, String descForm ,HttpServletRequest request){
+	private Boolean validate_form(String fullnameForm, String emailForm, String feedbackType,String descForm ,HttpServletRequest request){
 		Boolean isValid = true;
 		
 		if (fullnameForm == null || fullnameForm.trim().isEmpty()) {
@@ -106,9 +106,10 @@ public class FeedbackServlet extends HttpServlet {
 		
 		String fullnameForm = request.getParameter("fullname");
 		String emailForm = request.getParameter("email");
+		String feedbackType = request.getParameter("feedback-type");
 		String descForm = request.getParameter("text");
 		
-		Boolean form = validate_form(fullnameForm, emailForm, descForm, request);
+		Boolean form = validate_form(fullnameForm, emailForm, feedbackType, descForm, request);
 		
 		if (form) {
 			// Success: Show a popup and redirect back into the form
@@ -117,8 +118,10 @@ public class FeedbackServlet extends HttpServlet {
 			response.getWriter().println("</script>");
 		} else {
 			// Failed: Reforward back the user to form with errors
-			RequestDispatcher dispatcher = request.getRequestDispatcher("FeedbackForm.jsp");
-			dispatcher.forward(request, response);
+			
+			set_locale_bundle(request); // Make sure bundle is available
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("FeedbackForm.jsp");
+		    dispatcher.forward(request, response); // Throws error into console btw
 		}
 		
 	}
