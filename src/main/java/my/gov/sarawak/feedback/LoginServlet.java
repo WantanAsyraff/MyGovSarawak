@@ -112,9 +112,9 @@ public class LoginServlet extends HttpServlet {
     	}
     	else {
     		// If failed login, we fail session.
-    		sess.invalidate();
     		sess.setAttribute("sessionSuccess", false);
     		sess.setAttribute("errorMsg", "Invalid Login! Please try again.");
+    		sess.invalidate();
     	}
 	}
     
