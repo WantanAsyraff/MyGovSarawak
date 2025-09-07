@@ -19,14 +19,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Feedback Form</title>
-<link rel="stylesheet" href="./style.css"> <!-- Don't forget, ./ is to ref curr directory! -->
+<link rel="stylesheet" href="./feedback.css"> <!-- Don't forget, ./ is to ref curr directory! -->
 </head>
 <body>
 	<!-- FEEDBACK FORM HTML -->
 	<section class="card-wrapper">
-    <div class="feedback-form-card"> <!-- fixed typo -->
+    <div class="feedback-form-card">
         <h1><%= bundle.getString("feedback.form.title") %></h1>
-        <form class="inner-feedback-form" action="FeedbackServlet" method="POST">
+        <h2><%= bundle.getString("feedback.form.desc") %></h2>
+        <form id="feedback-form" action="FeedbackServlet" method="POST">
             <label><%= bundle.getString("full.name") %>:</label>
             <input name="fullname" required>
 
@@ -43,8 +44,8 @@
             <label><%= bundle.getString("inquiry") %>:</label>
             <textarea name="text" required></textarea>
 
-            <button type="submit"><%= bundle.getString("submit") %></button>
-            <button type="reset"><%= bundle.getString("clear") %></button>
+            <button id="feedback-submit" type="submit"><%= bundle.getString("submit") %></button>
+            <button id="feedback-reset" type="reset"><%= bundle.getString("clear") %></button>
         </form>
     </div>
 </section>
