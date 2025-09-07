@@ -121,7 +121,12 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//Always set your locale bundle
+		// Headers & Content
+		response.setHeader("Accept-Language", "ms-MY");
+	    response.setContentType("text/html; charset=UTF-8");
+	    response.setCharacterEncoding("UTF-8");
+		
+		// Always set your locale bundle
 		set_locale_bundle(request);
 		
 		// Forward to JSP
@@ -134,6 +139,11 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		//Headers & Contents
+		response.setHeader("Accept-Language", "ms-MY");
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		
 		// If no session exists, one gets created automatically.
 		HttpSession session = request.getSession(true);
@@ -163,7 +173,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			
 			// If incorrect, we send the user back to login form. with an error message.
-			response.sendRedirect("LoginForm.jsp?error=1");
+			response.sendRedirect("FeedbackServlet");
 		}
 		
 		// doGet(request, response);
