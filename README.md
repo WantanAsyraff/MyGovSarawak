@@ -1,5 +1,5 @@
 # Sarawak Digital Feedback Portal
-
+![Screenshot of the app](preview.png)
 A Java Servlet-based web application that enables Sarawak state residents to submit feedback about public services including infrastructure, healthcare, and education.
 
 ## Project Overview
